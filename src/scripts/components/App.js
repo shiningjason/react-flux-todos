@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Input from './Input';
 import TodoList from './TodoList';
 
 const DEFAULT_TODOS = [
@@ -33,12 +34,28 @@ const App = React.createClass({
     }
   },
 
+  addTodo(content) {
+    const { todos } = this.state;
+    todos.push();
+    this.setState({
+      todos: [
+        ...todos,
+        {
+          id: todos.length + 1,
+          content,
+          completed: false
+        }
+      ]
+    })
+  },
+
   render() {
     const { todos } = this.state;
 
     return (
       <div>
         <Header username="Jason" todoNumber={todos.length} />
+        <Input placeholder="新增代辦事項 :(" onEnter={this.addTodo} />
         <TodoList todos={todos} />
       </div>
     );
