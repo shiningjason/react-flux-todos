@@ -5,14 +5,9 @@ const ENTER_KEY = 13;
 const Input = React.createClass({
 
   propTypes: {
+    defaultValue: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     onEnter: React.PropTypes.func
-  },
-
-  getInitialState() {
-    return {
-      value: ''
-    };
   },
 
   handleChange(event) {
@@ -24,7 +19,7 @@ const Input = React.createClass({
   handleKeyDown(event) {
     switch (event.keyCode) {
       case ENTER_KEY:
-        this.handleEnter(event)
+        this.handleEnter(event);
         break;
     }
   },
@@ -41,15 +36,19 @@ const Input = React.createClass({
   },
 
   render() {
-    const { placeholder } = this.props;
-    const { value } = this.state;
+    const { onKeyDown, ...rest } = this.props;
+    const { value } = this.state || {};
 
     return (
-      <input type="text"
-             value={value}
-             placeholder={placeholder}
-             onChange={this.handleChange}
-             onKeyDown={this.handleKeyDown} />
+      <input
+        type="text"
+        value={value}
+        onChange={this.handleChange}
+        onKeyDown={(event) => {
+          this.handleKeyDown(event);
+          onKeyDown && onKeyDown(event);
+        }}
+        {...rest} />
     );
   }
 });

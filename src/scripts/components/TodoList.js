@@ -4,14 +4,23 @@ import TodoItem from './TodoItem';
 const TodoList = React.createClass({
 
   propTypes: {
-    todos: React.PropTypes.array.isRequired
+    todos: React.PropTypes.array.isRequired,
+    onToggle: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+    onDelete: React.PropTypes.func.isRequired
   },
 
   render() {
-    const { todos } = this.props;
+    const { todos, onToggle, onChange, onDelete } = this.props;
+
     const todoItems = todos.map(todo => (
       <li key={todo.id}>
-        <TodoItem content={todo.content} completed={todo.completed} />
+        <TodoItem
+          content={todo.content}
+          completed={todo.completed}
+          onToggle={() => onToggle(todo.id)}
+          onChange={(content) => onChange(todo.id, content)}
+          onDelete={() => onDelete(todo.id)} />
       </li>
     ));
 

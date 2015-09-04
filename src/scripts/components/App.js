@@ -36,7 +36,6 @@ const App = React.createClass({
 
   addTodo(content) {
     const { todos } = this.state;
-    todos.push();
     this.setState({
       todos: [
         ...todos,
@@ -49,6 +48,36 @@ const App = React.createClass({
     })
   },
 
+  toggleTodo(id) {
+    const { todos } = this.state;
+    const idx = todos.findIndex((todo) => todo.id === id);
+    todos[idx].completed = !todos[idx].completed;
+
+    this.setState({
+      todos: todos
+    });
+  },
+
+  editTodo(id, content) {
+    const { todos } = this.state;
+    const idx = todos.findIndex((todo) => todo.id === id);
+    todos[idx].content = content;
+
+    this.setState({
+      todos: todos
+    });
+  },
+
+  deleteTodo(id) {
+    const { todos } = this.state;
+    const idx = todos.findIndex((todo) => todo.id === id);
+    todos.splice(idx, 1);
+
+    this.setState({
+      todos: todos
+    });
+  },
+
   render() {
     const { todos } = this.state;
 
@@ -56,7 +85,10 @@ const App = React.createClass({
       <div>
         <Header username="Jason" todoNumber={todos.length} />
         <Input placeholder="新增代辦事項 :(" onEnter={this.addTodo} />
-        <TodoList todos={todos} />
+        <TodoList todos={todos}
+          onToggle={this.toggleTodo}
+          onChange={this.editTodo}
+          onDelete={this.deleteTodo} />
       </div>
     );
   }
