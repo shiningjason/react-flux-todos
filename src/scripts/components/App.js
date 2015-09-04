@@ -7,7 +7,7 @@ const App = React.createClass({
     return (
     <div>
       <header>
-        <h1>./</h1>
+        <h1>react-flux-todos</h1>
         <h3>A React/Flux app generate by RF, powered with Babel</h3>
       </header>
       <article className="context">
