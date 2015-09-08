@@ -1,87 +1,25 @@
 import React from 'react';
-import update from 'react/lib/update';
 import Header from './Header';
 import Input from './Input';
 import TodoList from './TodoList';
-
-const DEFAULT_TODOS = [
-  {
-    id: 1,
-    content: '準備 React & Flux 教育訓練',
-    completed: false
-  },
-  {
-    id: 2,
-    content: '繳電話費',
-    completed: false
-  },
-  {
-    id: 3,
-    content: '繳房租',
-    completed: false
-  },
-  {
-    id: 4,
-    content: '週會會議記錄',
-    completed: true
-  }
-];
+import TodoStore from '../stores/TodoStore';
 
 const App = React.createClass({
 
   getInitialState() {
-    return { todos: DEFAULT_TODOS };
+    return { todos: TodoStore.getAll() };
   },
 
-  addTodo(content) {
-    const { todos } = this.state;
-
-    this.setState({
-      todos: update(todos, {
-        $push: [{
-          id: todos.length + 1,
-          content,
-          completed: false
-        }]
-      })
-    });
+  componentDidMount: function() {
+    TodoStore.addChangeListener(this._onChange);
   },
 
-  toggleTodo(id) {
-    const { todos } = this.state;
-    const idx = todos.findIndex((todo) => todo.id === id);
-
-    this.setState({
-      todos: update(todos, {
-        [idx]: {
-          completed: { $set: !todos[idx].completed }
-        }
-      })
-    });
+  componentWillUnmount: function() {
+    TodoStore.removeChangeListener(this._onChange);
   },
 
-  editTodo(id, content) {
-    const { todos } = this.state;
-    const idx = todos.findIndex((todo) => todo.id === id);
-
-    this.setState({
-      todos: update(todos, {
-        [idx]: {
-          content: { $set: content }
-        }
-      })
-    });
-  },
-
-  deleteTodo(id) {
-    const { todos } = this.state;
-    const idx = todos.findIndex((todo) => todo.id === id);
-
-    this.setState({
-      todos: update(todos, {
-        $splice: [[idx, 1]]
-      })
-    });
+  _onChange: function() {
+    this.setState({ todos: TodoStore.getAll() });
   },
 
   render() {
