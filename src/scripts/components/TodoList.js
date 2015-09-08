@@ -14,7 +14,7 @@ const TodoList = React.createClass({
     const { todos, onToggle, onChange, onDelete } = this.props;
 
     const todoItems = todos.map(todo => (
-      <li key={todo.id}>
+      <li key={todo.id} style={styles.todoItem}>
         <TodoItem
           content={todo.content}
           completed={todo.completed}
@@ -34,7 +34,11 @@ const TodoList = React.createClass({
 
 const styles = {
   todoList: {
+    padding: '0px',
     listStyle: 'none'
+  },
+  todoItem: {
+    borderBottom: '1px solid #ededed'
   }
 };
 

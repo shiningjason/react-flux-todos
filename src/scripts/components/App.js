@@ -1,4 +1,5 @@
 import React from 'react';
+import update from 'react/lib/update';
 import Header from './Header';
 import Input from './Input';
 import TodoList from './TodoList';
@@ -29,52 +30,57 @@ const DEFAULT_TODOS = [
 const App = React.createClass({
 
   getInitialState() {
-    return {
-      todos: DEFAULT_TODOS
-    }
+    return { todos: DEFAULT_TODOS };
   },
 
   addTodo(content) {
     const { todos } = this.state;
+
     this.setState({
-      todos: [
-        ...todos,
-        {
+      todos: update(todos, {
+        $push: [{
           id: todos.length + 1,
           content,
           completed: false
-        }
-      ]
-    })
+        }]
+      })
+    });
   },
 
   toggleTodo(id) {
     const { todos } = this.state;
     const idx = todos.findIndex((todo) => todo.id === id);
-    todos[idx].completed = !todos[idx].completed;
 
     this.setState({
-      todos: todos
+      todos: update(todos, {
+        [idx]: {
+          completed: { $set: !todos[idx].completed }
+        }
+      })
     });
   },
 
   editTodo(id, content) {
     const { todos } = this.state;
     const idx = todos.findIndex((todo) => todo.id === id);
-    todos[idx].content = content;
 
     this.setState({
-      todos: todos
+      todos: update(todos, {
+        [idx]: {
+          content: { $set: content }
+        }
+      })
     });
   },
 
   deleteTodo(id) {
     const { todos } = this.state;
     const idx = todos.findIndex((todo) => todo.id === id);
-    todos.splice(idx, 1);
 
     this.setState({
-      todos: todos
+      todos: update(todos, {
+        $splice: [[idx, 1]]
+      })
     });
   },
 
@@ -82,7 +88,7 @@ const App = React.createClass({
     const { todos } = this.state;
 
     return (
-      <div>
+      <div style={styles.container}>
         <Header username="Jason" todoNumber={todos.length} />
         <Input placeholder="新增代辦事項 :(" onEnter={this.addTodo} />
         <TodoList todos={todos}
@@ -93,5 +99,14 @@ const App = React.createClass({
     );
   }
 });
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '550px',
+    margin: '0 auto'
+  },
+};
 
 module.exports = App;

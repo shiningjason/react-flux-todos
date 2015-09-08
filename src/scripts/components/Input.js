@@ -5,15 +5,15 @@ const ENTER_KEY = 13;
 const Input = React.createClass({
 
   propTypes: {
-    defaultValue: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
     onEnter: React.PropTypes.func
   },
 
+  getInitialState() {
+    return { value: this.props.defaultValue || '' };
+  },
+
   handleChange(event) {
-    this.setState({
-      value: event.target.value
-    });
+    this.setState({ value: event.target.value });
   },
 
   handleKeyDown(event) {
@@ -22,6 +22,9 @@ const Input = React.createClass({
         this.handleEnter(event);
         break;
     }
+
+    const { onKeyDown } = this.props;
+    onKeyDown && onKeyDown(event);
   },
 
   handleEnter(event) {
@@ -30,27 +33,29 @@ const Input = React.createClass({
     const { onEnter } = this.props;
     onEnter && onEnter(this.state.value);
 
-    this.setState({
-      value: ''
-    });
+    this.setState({ value: '' });
   },
 
   render() {
-    const { onKeyDown, ...rest } = this.props;
-    const { value } = this.state || {};
-
     return (
       <input
+        {...this.props}
         type="text"
-        value={value}
+        style={{ ...styles.input, ...this.props.style }}
+        value={this.state.value}
         onChange={this.handleChange}
-        onKeyDown={(event) => {
-          this.handleKeyDown(event);
-          onKeyDown && onKeyDown(event);
-        }}
-        {...rest} />
+        onKeyDown={this.handleKeyDown} />
     );
   }
 });
+
+const styles = {
+  input: {
+    border: '1px solid #999',
+    padding: '6px',
+    fontSize: '24px',
+    lineHeight: '1.4em'
+  }
+};
 
 module.exports = Input;

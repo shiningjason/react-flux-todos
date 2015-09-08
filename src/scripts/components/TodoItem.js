@@ -14,23 +14,18 @@ const TodoItem = React.createClass({
   },
 
   getInitialState() {
-    return {
-      editable: false
-    };
+    return { editable: false };
   },
 
   componentDidUpdate: function (prevProps, prevState) {
     if (!prevState.editable && this.state.editable) {
       const node = React.findDOMNode(this.refs.editField);
       node.focus();
-      node.setSelectionRange(node.value.length, node.value.length);
     }
   },
 
   toggleEditable() {
-    this.setState({
-      editable: !this.state.editable
-    });
+    this.setState({ editable: !this.state.editable });
   },
 
   render() {
@@ -39,10 +34,20 @@ const TodoItem = React.createClass({
 
     if (!editable) {
       return (
-        <div>
-          <input type="checkbox" checked={completed} onChange={onToggle} />
-          <label onDoubleClick={this.toggleEditable}>{content}</label>
-          <button onClick={onDelete}>x</button>
+        <div style={styles.container}>
+          <input
+            type="checkbox"
+            style={styles.checkbox}
+            checked={completed}
+            onChange={onToggle} />
+
+          <label
+            style={styles.content}
+            onDoubleClick={this.toggleEditable}>{content}</label>
+
+          <button
+            style={styles.deleteBtn}
+            onClick={onDelete}>x</button>
         </div>
       );
 
@@ -50,6 +55,7 @@ const TodoItem = React.createClass({
       return (
         <Input
           ref="editField"
+          style={styles.input}
           defaultValue={content}
           onEnter={(content) => {
             if (content !== '') onChange(content);
@@ -70,5 +76,26 @@ const TodoItem = React.createClass({
     }
   }
 });
+
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '6px 0',
+    fontSize: '24px',
+    lineHeight: '1.4em',
+  },
+  checkbox: {
+    width: '40px'
+  },
+  content: {
+    flex: 1
+  },
+  deleteBtn: {},
+  input: {
+    width: '100%',
+    paddingLeft: '40px'
+  }
+};
 
 module.exports = TodoItem;
