@@ -1,34 +1,33 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
 import TodoConstants from '../constants/TodoConstants';
 
 const TodoActions = {
   create(content) {
-    AppDispatcher.dispatch({
-      actionType: TodoConstants.CREATE,
-      content: content
-    });
+    return {
+      type: TodoConstants.CREATE,
+      content
+    };
   },
 
   toggle(id) {
-    AppDispatcher.dispatch({
-      actionType: TodoConstants.TOGGLE,
-      id: id
-    });
+    return {
+      type: TodoConstants.TOGGLE,
+      id
+    };
   },
 
   update(id, content) {
-    AppDispatcher.dispatch({
-      actionType: TodoConstants.UPDATE,
-      id: id,
-      content: content
-    });
+    return {
+      type: TodoConstants.UPDATE,
+      id,
+      content
+    };
   },
 
   delete(id) {
-    AppDispatcher.dispatch({
-      actionType: TodoConstants.DELETE,
-      id: id
-    });
+    return {
+      type: TodoConstants.DELETE,
+      id
+    };
   }
 };
 
