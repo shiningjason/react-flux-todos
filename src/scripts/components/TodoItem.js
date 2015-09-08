@@ -3,30 +3,31 @@ import Input from './Input';
 
 const ESCAPE_KEY = 27;
 
-const TodoItem = React.createClass({
+export default class TodoItem extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     content: React.PropTypes.string.isRequired,
     completed: React.PropTypes.bool.isRequired,
     onToggle: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired
-  },
+  };
 
-  getInitialState() {
-    return { editable: false };
-  },
+  constructor(props, context) {
+    super(props, context);
+    this.state = { editable: false };
+  }
 
-  componentDidUpdate: function (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (!prevState.editable && this.state.editable) {
       const node = React.findDOMNode(this.refs.editField);
       node.focus();
     }
-  },
+  }
 
   toggleEditable() {
     this.setState({ editable: !this.state.editable });
-  },
+  }
 
   render() {
     const { content, completed, onToggle, onChange, onDelete } = this.props;
@@ -43,7 +44,7 @@ const TodoItem = React.createClass({
 
           <label
             style={styles.content}
-            onDoubleClick={this.toggleEditable}>{content}</label>
+            onDoubleClick={::this.toggleEditable}>{content}</label>
 
           <button
             style={styles.deleteBtn}
@@ -75,7 +76,7 @@ const TodoItem = React.createClass({
       );
     }
   }
-});
+}
 
 const styles = {
   container: {
@@ -97,5 +98,3 @@ const styles = {
     paddingLeft: '40px'
   }
 };
-
-module.exports = TodoItem;

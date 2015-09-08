@@ -1,4 +1,4 @@
-require('../assets/stylesheets/style.sass');
+import '../assets/stylesheets/style.sass';
 
 import React from 'react';
 import AppContainer from './components/AppContainer';

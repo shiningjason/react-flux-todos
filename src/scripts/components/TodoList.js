@@ -1,14 +1,14 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = React.createClass({
+export default class TodoList extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     todos: React.PropTypes.array.isRequired,
     onToggle: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired
-  },
+  };
 
   render() {
     const { todos, onToggle, onChange, onDelete } = this.props;
@@ -30,7 +30,7 @@ const TodoList = React.createClass({
       </ul>
     );
   }
-});
+}
 
 const styles = {
   todoList: {
@@ -41,5 +41,3 @@ const styles = {
     borderBottom: '1px solid #ededed'
   }
 };
-
-module.exports = TodoList;

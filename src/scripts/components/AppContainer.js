@@ -7,7 +7,7 @@ import * as reducers from '../reducers';
 const composedReducer = combineReducers(reducers);
 const store = createStore(composedReducer);
 
-const AppContainer = React.createClass({
+export default class AppContainer extends React.Component {
   render() {
     return (
       <Provider store={store}>
@@ -15,6 +15,4 @@ const AppContainer = React.createClass({
       </Provider>
     );
   }
-});
-
-module.exports = AppContainer;
+}

@@ -2,17 +2,16 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Input from './Input';
-import TodoActions from '../actions/TodoActions';
+import { createTodo } from '../actions/TodoActions';
 
-const AddTodoInput = React.createClass({
+@connect(
+  undefined,
+  (dispatch) => bindActionCreators({ createTodo }, dispatch)
+)
+export default class AddTodoInput extends React.Component {
   render() {
     return (
       <Input placeholder="新增代辦事項 :(" onEnter={this.props.createTodo} />
     );
   }
-});
-
-module.exports = connect(
-  undefined,
-  (dispatch) => ({ createTodo: bindActionCreators(TodoActions.create, dispatch) })
-)(AddTodoInput);
+}

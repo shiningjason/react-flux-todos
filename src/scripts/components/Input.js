@@ -2,19 +2,22 @@ import React from 'react';
 
 const ENTER_KEY = 13;
 
-const Input = React.createClass({
+export default class Input extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     onEnter: React.PropTypes.func
-  },
+  };
 
-  getInitialState() {
-    return { value: this.props.defaultValue || '' };
-  },
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      value: props.defaultValue || ''
+    };
+  }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-  },
+  }
 
   handleKeyDown(event) {
     switch (event.keyCode) {
@@ -25,7 +28,7 @@ const Input = React.createClass({
 
     const { onKeyDown } = this.props;
     onKeyDown && onKeyDown(event);
-  },
+  }
 
   handleEnter(event) {
     event.preventDefault();
@@ -34,7 +37,7 @@ const Input = React.createClass({
     onEnter && onEnter(this.state.value);
 
     this.setState({ value: '' });
-  },
+  }
 
   render() {
     return (
@@ -43,11 +46,11 @@ const Input = React.createClass({
         type="text"
         style={{ ...styles.input, ...this.props.style }}
         value={this.state.value}
-        onChange={this.handleChange}
-        onKeyDown={this.handleKeyDown} />
+        onChange={::this.handleChange}
+        onKeyDown={::this.handleKeyDown} />
     );
   }
-});
+}
 
 const styles = {
   input: {
@@ -57,5 +60,3 @@ const styles = {
     lineHeight: '1.4em'
   }
 };
-
-module.exports = Input;

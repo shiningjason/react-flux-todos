@@ -3,8 +3,7 @@ import HeaderContainer from './HeaderContainer';
 import AddTodoInput from './AddTodoInput';
 import TodoListContainer from './TodoListContainer';
 
-const App = React.createClass({
-
+export default class App extends React.Component {
   render() {
     return (
       <div style={styles.container}>
@@ -14,7 +13,7 @@ const App = React.createClass({
       </div>
     );
   }
-});
+}
 
 const styles = {
   container: {
@@ -24,5 +23,3 @@ const styles = {
     margin: '0 auto'
   },
 };
-
-module.exports = App;

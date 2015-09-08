@@ -1,34 +1,22 @@
 import TodoConstants from '../constants/TodoConstants';
 
-const TodoActions = {
-  create(content) {
-    return {
-      type: TodoConstants.CREATE,
-      content
-    };
-  },
+export const createTodo = (content) => ({
+  type: TodoConstants.CREATE,
+  content
+});
 
-  toggle(id) {
-    return {
-      type: TodoConstants.TOGGLE,
-      id
-    };
-  },
+export const toggleTodo = (id) => ({
+  type: TodoConstants.TOGGLE,
+  id
+});
 
-  update(id, content) {
-    return {
-      type: TodoConstants.UPDATE,
-      id,
-      content
-    };
-  },
+export const updateTodo = (id, content) => ({
+  type: TodoConstants.UPDATE,
+  id,
+  content
+});
 
-  delete(id) {
-    return {
-      type: TodoConstants.DELETE,
-      id
-    };
-  }
-};
-
-module.exports = TodoActions;
+export const deleteTodo = (id) => ({
+  type: TodoConstants.DELETE,
+  id
+});

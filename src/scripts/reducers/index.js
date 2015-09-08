@@ -1,5 +1,1 @@
-import todos from './todos';
-
-module.exports = {
-  todos
-};
+export todos from './todos';

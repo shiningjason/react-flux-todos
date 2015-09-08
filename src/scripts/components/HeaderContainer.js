@@ -3,15 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from './Header';
 
-const HeaderContainer = React.createClass({
-
+@connect((state) => ({ todoNumber: state.todos.length }))
+export default class HeaderContainer extends React.Component {
   render() {
     return (
       <Header username="Jason" todoNumber={this.props.todoNumber} />
     );
   }
-});
-
-module.exports = connect(
-  (state) => ({ todoNumber: state.todos.length })
-)(HeaderContainer);
+}

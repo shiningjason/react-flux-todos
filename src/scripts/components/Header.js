@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Header = React.createClass({
+export default class Header extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     username: React.PropTypes.string.isRequired,
     todoNumber: React.PropTypes.number.isRequired
-  },
+  };
 
   render() {
     const { username, todoNumber } = this.props;
@@ -17,6 +17,4 @@ const Header = React.createClass({
       </header>
     );
   }
-});
-
-module.exports = Header;
+}

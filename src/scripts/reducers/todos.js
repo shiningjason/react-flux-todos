@@ -59,7 +59,7 @@ const _deleteTodo = (todos, id) => {
   })
 };
 
-const reducer = (state = DEFAULT_TODOS, action) => {
+export default (state = DEFAULT_TODOS, action) => {
   switch (action.type) {
     case TodoConstants.CREATE:
       return _addTodo(state, action.content);
@@ -77,5 +77,3 @@ const reducer = (state = DEFAULT_TODOS, action) => {
       return state;
   }
 };
-
-module.exports = reducer;

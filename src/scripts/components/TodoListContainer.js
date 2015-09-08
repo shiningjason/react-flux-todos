@@ -2,10 +2,13 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TodoList from './TodoList';
-import TodoActions from '../actions/TodoActions';
+import { toggleTodo, updateTodo, deleteTodo } from '../actions/TodoActions';
 
-const TodoListContainer = React.createClass({
-
+@connect(
+  (state) => ({ todos: state.todos }),
+  (dispatch) => bindActionCreators({ toggleTodo, updateTodo, deleteTodo }, dispatch)
+)
+export default class TodoListContainer extends React.Component {
   render() {
     const { todos, toggleTodo, updateTodo, deleteTodo } = this.props;
     return (
@@ -16,13 +19,4 @@ const TodoListContainer = React.createClass({
         onDelete={deleteTodo} />
     );
   }
-});
-
-module.exports = connect(
-  (state) => ({ todos: state.todos }),
-  (dispatch) => ({
-    toggleTodo: bindActionCreators(TodoActions.toggle, dispatch),
-    updateTodo: bindActionCreators(TodoActions.update, dispatch),
-    deleteTodo: bindActionCreators(TodoActions.delete, dispatch)
-  })
-)(TodoListContainer);;
+}
