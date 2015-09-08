@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Input from './Input';
 import TodoList from './TodoList';
+import TodoActions from '../actions/TodoActions';
 import TodoStore from '../stores/TodoStore';
 
 const App = React.createClass({
@@ -28,11 +29,11 @@ const App = React.createClass({
     return (
       <div style={styles.container}>
         <Header username="Jason" todoNumber={todos.length} />
-        <Input placeholder="新增代辦事項 :(" onEnter={this.addTodo} />
+        <Input placeholder="新增代辦事項 :(" onEnter={TodoActions.create} />
         <TodoList todos={todos}
-          onToggle={this.toggleTodo}
-          onChange={this.editTodo}
-          onDelete={this.deleteTodo} />
+          onToggle={TodoActions.toggle}
+          onChange={TodoActions.update}
+          onDelete={TodoActions.delete} />
       </div>
     );
   }

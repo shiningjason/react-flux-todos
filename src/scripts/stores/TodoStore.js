@@ -86,9 +86,7 @@ const TodoStore = {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  dispatcherIndex: AppDispatcher.register((payload) => {
-    const action = payload.action;
-
+  dispatcherIndex: AppDispatcher.register((action) => {
     switch (action.actionType) {
       case TodoConstants.CREATE:
         _addTodo(action.content);
