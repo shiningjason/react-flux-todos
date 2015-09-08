@@ -1,39 +1,28 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import TodoList from './TodoList';
 import TodoActions from '../actions/TodoActions';
-import TodoStore from '../stores/TodoStore';
-
-const getTodoState = () => ({
-  todos: TodoStore.getAll()
-});
 
 const TodoListContainer = React.createClass({
 
-  getInitialState() {
-    return getTodoState();
-  },
-
-  componentDidMount: function() {
-    TodoStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    TodoStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-    this.setState(getTodoState());
-  },
-
   render() {
+    const { todos, toggleTodo, updateTodo, deleteTodo } = this.props;
     return (
       <TodoList 
-        todos={this.state.todos}
-        onToggle={TodoActions.toggle}
-        onChange={TodoActions.update}
-        onDelete={TodoActions.delete} />
+        todos={todos}
+        onToggle={toggleTodo}
+        onChange={updateTodo}
+        onDelete={deleteTodo} />
     );
   }
 });
 
-module.exports = TodoListContainer;
+module.exports = connect(
+  (state) => ({ todos: state.todos }),
+  (dispatch) => ({
+    toggleTodo: bindActionCreators(TodoActions.toggle, dispatch),
+    updateTodo: bindActionCreators(TodoActions.update, dispatch),
+    deleteTodo: bindActionCreators(TodoActions.delete, dispatch)
+  })
+)(TodoListContainer);;

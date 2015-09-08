@@ -1,34 +1,17 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Header from './Header';
-import TodoStore from '../stores/TodoStore';
-
-const getTodoNumberState = () => ({
-  todoNumber: TodoStore.getAll().length
-});
 
 const HeaderContainer = React.createClass({
 
-  getInitialState() {
-    return getTodoNumberState();
-  },
-
-  componentDidMount: function() {
-    TodoStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    TodoStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function() {
-    this.setState(getTodoNumberState());
-  },
-
   render() {
     return (
-      <Header username="Jason" todoNumber={this.state.todoNumber} />
+      <Header username="Jason" todoNumber={this.props.todoNumber} />
     );
   }
 });
 
-module.exports = HeaderContainer;
+module.exports = connect(
+  (state) => ({ todoNumber: state.todos.length })
+)(HeaderContainer);
